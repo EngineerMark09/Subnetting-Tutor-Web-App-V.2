@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subnet Tutor v2 - Advanced Subnetting Learning Tool</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- SVG Sprite (hidden) -->
+    <div class="svg-sprite-container">
+        <svg xmlns="http://www.w3.org/2000/svg">
+            <symbol id="icon-calculate" viewBox="0 0 24 24">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2zm-4 8H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V7h2v2z"/>
+            </symbol>
+            <symbol id="icon-tree" viewBox="0 0 24 24">
+                <path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"/>
+            </symbol>
+            <symbol id="icon-binary" viewBox="0 0 24 24">
+                <path d="M8 3h1v2H8V3zm0 4h1v2H8V7zm0 4h1v2H8v-2zm0 4h1v2H8v-2zm0 4h1v2H8v-2zM12 3h1v2h-1V3zm0 4h1v2h-1V7zm0 4h1v2h-1v-2zm0 4h1v2h-1v-2zm0 4h1v2h-1v-2zM16 3h1v2h-1V3zm0 4h1v2h-1V7zm0 4h1v2h-1v-2zm0 4h1v2h-1v-2zm0 4h1v2h-1v-2z"/>
+            </symbol>
+            <symbol id="icon-export" viewBox="0 0 24 24">
+                <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/>
+            </symbol>
+            <symbol id="icon-moon" viewBox="0 0 24 24">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </symbol>
+            <symbol id="icon-sun" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </symbol>
+            <symbol id="icon-info" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="16" x2="12" y2="12"/>
+                <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </symbol>
+            <symbol id="icon-beginner" viewBox="0 0 24 24">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </symbol>
+            <symbol id="icon-expert" viewBox="0 0 24 24">
+                <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+            </symbol>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1>
+                    <span class="logo-icon">📡</span>
+                    Subnet Tutor <span class="version">v2.0</span>
+                </h1>
+                <p class="tagline">Advanced Subnetting Calculator & Learning Tool</p>
+            </div>
+            <div class="header-controls">
+                <button id="modeToggle" class="mode-toggle" title="Switch between Beginner and Expert mode">
+                    <svg class="icon"><use href="#icon-beginner"></use></svg>
+                    <span>Beginner Mode</span>
+                </button>
+                <button id="themeToggle" class="theme-toggle" title="Toggle dark/light theme">
+                    <svg class="icon"><use href="#icon-moon"></use></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <section class="card input-section">
+                <h2>
+                    <svg class="icon"><use href="#icon-calculate"></use></svg>
+                    Subnet Configuration
+                </h2>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="baseIP">
+                            Base IP Address
+                            <span class="tooltip" data-tooltip="Enter the network IP address (e.g., 192.168.1.0)">
+                                <svg class="icon-small"><use href="#icon-info"></use></svg>
+                            </span>
+                        </label>
+                        <input type="text" id="baseIP" placeholder="Enter IP Address (e.g., 192.168.1.0)" value="192.168.1.0">
+                    </div>
+                    <div class="input-group">
+                        <label for="basePrefix">
+                            Base Prefix (CIDR)
+                            <span class="tooltip" data-tooltip="Network prefix length (8-30)">
+                                <svg class="icon-small"><use href="#icon-info"></use></svg>
+                            </span>
+                        </label>
+                        <input type="number" id="basePrefix" min="8" max="30" placeholder="Enter prefix (e.g., 24)" value="24">
+                    </div>
+                    <div class="input-group">
+                        <label for="newPrefix">
+                            Split to New Prefix (Optional)
+                            <span class="tooltip" data-tooltip="Divide network into smaller subnets (must be larger than base prefix)">
+                                <svg class="icon-small"><use href="#icon-info"></use></svg>
+                            </span>
+                        </label>
+                        <input type="number" id="newPrefix" min="8" max="30" placeholder="Enter new prefix (e.g., 26) - Optional">
+                    </div>
+                    <div class="input-group button-group">
+                        <button id="calculateBtn" class="btn btn-primary">
+                            <svg class="icon"><use href="#icon-calculate"></use></svg>
+                            Calculate Subnets
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="card results-section hidden" id="resultsSection">
+                <div class="results-header">
+                    <h2>📊 Calculation Results</h2>
+                    <div class="export-buttons">
+                        <button id="exportCSV" class="btn btn-secondary">
+                            <svg class="icon"><use href="#icon-export"></use></svg>
+                            Export CSV
+                        </button>
+                        <button id="exportPDF" class="btn btn-secondary">
+                            <svg class="icon"><use href="#icon-export"></use></svg>
+                            Export PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Calculation Summary Overview -->
+                <div class="calculation-summary-box">
+                    <h3>📋 STANDARD SUBNETTING OUTPUTS</h3>
+                    <div class="standard-outputs-grid">
+                        <!-- Column 1: Network Information -->
+                        <div class="output-section">
+                            <h4>🌐 Network Information</h4>
+                            <div class="output-item">
+                                <span class="output-label">Network Address:</span>
+                                <span class="output-value" id="networkAddress">-</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-label">Broadcast Address:</span>
+                                <span class="output-value" id="broadcastAddress">-</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-label">Subnet Mask (Decimal):</span>
+                                <span class="output-value" id="subnetMaskDecimal">-</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-label">Subnet Mask (Binary):</span>
+                                <span class="output-value mono-small" id="subnetMaskBinary">-</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-label">CIDR Notation:</span>
+                                <span class="output-value" id="cidrNotation">-</span>
+                            </div>
+                        </div>
+
+                        <!-- Column 2: Host Information -->
+                        <div class="output-section">
+                            <h4>💻 Host Information</h4>
+                            <div class="output-item">
+                                <span class="output-label">First Usable Host:</span>
+                                <span class="output-value" id="firstUsableHost">-</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-label">Last Usable Host:</span>
+                                <span class="output-value" id="lastUsableHost">-</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-label">Total Usable Hosts:</span>
+                                <span class="output-value" id="totalUsableHosts">-</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-label">Total Addresses:</span>
+                                <span class="output-value" id="totalAddresses">-</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-label">Network Class:</span>
+                                <span class="output-value" id="networkClassDisplay">-</span>
+                            </div>
+                        </div>
+
+                        <!-- Column 3: Subnet Information -->
+                        <div class="output-section">
+                            <h4>🔢 Subnet Information</h4>
+                            <div class="output-item">
+                                <span class="output-label">Total Subnets:</span>
+                                <span class="output-value" id="totalSubnetsOutput">-</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-label">Hosts per Subnet:</span>
+                                <span class="output-value" id="hostsPerSubnetOutput">-</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-label">Network Bits:</span>
+                                <span class="output-value" id="networkBits">-</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-label">Host Bits:</span>
+                                <span class="output-value" id="hostBits">-</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-label">IP Type:</span>
+                                <span class="output-value" id="ipType">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="summary-label">Total Subnets</div>
+                        <div class="summary-value" id="totalSubnets">-</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Hosts per Subnet</div>
+                        <div class="summary-value" id="hostsPerSubnet">-</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Subnet Mask</div>
+                        <div class="summary-value" id="subnetMask">-</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Network Class</div>
+                        <div class="summary-value" id="networkClass">-</div>
+                    </div>
+                </div>
+
+                <!-- Results Table -->
+                <div class="table-container">
+                    <table class="results-table" id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th>Subnet #</th>
+                                <th>Network Address</th>
+                                <th>Broadcast Address</th>
+                                <th>Usable Range</th>
+                                <th>Usable Hosts</th>
+                                <th>Subnet Mask</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTableBody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Learning Panel (Beginner Mode) -->
+            <section class="card learning-panel hidden" id="learningPanel">
+                <h2>
+                    <svg class="icon"><use href="#icon-beginner"></use></svg>
+                    Step-by-Step Explanation
+                </h2>
+                <div id="explanationContent" class="explanation-content">
+                    <!-- Dynamic content from explanations.js -->
+                </div>
+            </section>
+
+            <!-- Visual Learning Components (Beginner Mode) -->
+            <div class="visual-components hidden" id="visualComponents">
+                <!-- Binary Visualization -->
+                <section class="card binary-section">
+                    <h2>
+                        <svg class="icon"><use href="#icon-binary"></use></svg>
+                        Binary Visualization
+                    </h2>
+                    <div id="binaryVisualization" class="binary-container">
+                        <!-- Dynamic content from visualizer.js -->
+                    </div>
+                </section>
+
+                <!-- Subnet Tree View -->
+                <section class="card tree-section">
+                    <h2>
+                        <svg class="icon"><use href="#icon-tree"></use></svg>
+                        Subnet Tree Structure
+                    </h2>
+                    <div id="subnetTree" class="tree-container">
+                        <!-- Dynamic SVG tree from visualizer.js -->
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>© 2025 Subnet Tutor v2.0 | Offline Tool | Dev: <strong>Mark Angelo Mingala</strong></p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/subnet-engine.js"></script>
+    <script src="js/explanations.js"></script>
+    <script src="js/visualizer.js"></script>
+    <script src="js/exporter.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
